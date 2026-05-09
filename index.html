@@ -4,6 +4,14 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AutoValor — Simulador & Comparador FIPE V4</title>
+
+<meta name="description" content="Descubra o valor real do seu próximo carro. Simulador automotivo avançado com projeção por decaimento composto e fator de quilometragem.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seulinkdavercel.vercel.app/">
+<meta property="og:title" content="AutoValor — Simulador FIPE V4">
+<meta property="og:description" content="Simule a desvalorização de seminovos com análise de resiliência de marca e elasticidade de uso.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1200&auto=format&fit=crop"> ```
+
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -1319,8 +1327,15 @@ class CarState {
       }
     } catch {
       this._clearLoading();
-      alert('Erro ao consultar FIPE. Verifique sua conexão.');
-    }
+      this.$fipe.value = 'Tente novamente';
+      // Troca o texto do botão temporariamente para avisar o usuário
+      const btnOriginal = this.$btn.textContent;
+      this.$btn.textContent = 'Erro no servidor FIPE. Tente em instantes.';
+      this.$btn.style.backgroundColor = 'var(--red)';
+      setTimeout(() => {
+        this.$btn.textContent = btnOriginal;
+        this.$btn.style.backgroundColor = '';
+      }, 4000);
   }
 
   /* ─── LÓGICA MATEMÁTICA V4 (CORRIGIDA) ─── */
